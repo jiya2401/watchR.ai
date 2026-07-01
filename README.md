@@ -19,7 +19,7 @@
 | Database Layer | ✅ |
 | Blog + GitHub Scraper | ✅ |
 | RAG Pipeline | ✅ |
-| LangGraph Agent | 🚧 |
+| LangGraph Agent | ✅ |
 | React Dashboard | ⏳ |
 
 
@@ -37,3 +37,19 @@ GitHub Scraper ───┤
             Gemini Flash
                   ▼
           Competitive Report 
+
+
+# Graph flow:
+  trigger_scrape
+      ↓
+  await_scrape ←──── (loops until done)
+      ↓ (when scrape_done=True)
+  analyze_tech
+      ↓
+  analyze_hiring
+      ↓
+  analyze_product
+      ↓
+  synthesize
+      ↓
+  END 
