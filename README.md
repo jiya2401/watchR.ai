@@ -7,7 +7,6 @@
 ![Gemini](https://img.shields.io/badge/Gemini-Free-green)
 ![Playwright](https://img.shields.io/badge/Playwright-orange)
 ![ChromaDB](https://img.shields.io/badge/ChromaDB-purple) 
-</p>
 
 <div/>
 
