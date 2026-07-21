@@ -1,8 +1,7 @@
 <div align="center">
+  
 # 👁️ watchR.ai
-
-> Autonomous Competitive Intelligence Agent for Indian Startups
-<div/>
+### Autonomous Competitive Intelligence Agent for Indian Startups
 
 <p align="center">
 
@@ -11,6 +10,8 @@
 ![Playwright](https://img.shields.io/badge/Playwright-orange)
 ![ChromaDB](https://img.shields.io/badge/ChromaDB-purple) 
 </p>
+
+<div/>
 
 
 # 🚀 Build Progress
