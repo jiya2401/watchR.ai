@@ -10,8 +10,7 @@
 
 </div>
 
-# 🚀 Build Progress
-
+#  Build Progress
 | Phase | Status |
 |-------|--------|
 | Docker Infrastructure | ✅ |
