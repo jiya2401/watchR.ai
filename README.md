@@ -1,14 +1,14 @@
 <div align="center">
-  
+
 # 👁️ watchR.ai
 ### Autonomous Competitive Intelligence Agent for Indian Startups
 
 ![LangGraph](https://img.shields.io/badge/LangGraph-blue)
 ![Gemini](https://img.shields.io/badge/Gemini-Free-green)
 ![Playwright](https://img.shields.io/badge/Playwright-orange)
-![ChromaDB](https://img.shields.io/badge/ChromaDB-purple) 
+![ChromaDB](https://img.shields.io/badge/ChromaDB-purple)
 
-<div/>
+</div>
 
 # 🚀 Build Progress
 
