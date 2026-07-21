@@ -11,8 +11,6 @@
 ![ChromaDB](https://img.shields.io/badge/ChromaDB-purple) 
 </p>
 
-<div/>
-
 
 # 🚀 Build Progress
 
