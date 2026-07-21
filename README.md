@@ -1,6 +1,8 @@
+<div align="center">
 # 👁️ watchR.ai
 
 > Autonomous Competitive Intelligence Agent for Indian Startups
+<div/>
 
 <p align="center">
 
