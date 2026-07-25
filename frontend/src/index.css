@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background: #080c14;
+  color: #e6edf3;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: #0d1117; }
+::-webkit-scrollbar-thumb { background: #30363d; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #484f58; }
+
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Terminal cursor blink */
+.cursor::after {
+  content: '▋';
+  animation: blink 1.2s step-end infinite;
+  color: #3fb950;
+}
