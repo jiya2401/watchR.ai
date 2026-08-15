@@ -29,7 +29,7 @@ class Source(str, Enum):
 class TechSignal(BaseModel):
     technology: str
     evidence: str
-    confidence: float          # 0.0 – 1.0
+    confidence: float = Field(ge=0.0, le=1.0)   
     signal_type: str           # adopting | scaling | retiring
 
 
@@ -42,8 +42,8 @@ class HiringSignal(BaseModel):
 class ProductSignal(BaseModel):
     feature: str
     evidence: str
-    launch_probability: float  # 0.0 – 1.0
-    timeline: str              # "2-3 months"
+    launch_probability: float = Field(ge=0.0, le=1.0)
+    timeline: str = Field(default="2-3 months")          
 
 
 class StepLog(BaseModel):
@@ -74,7 +74,7 @@ class Report(BaseModel):
     hiring_signals: list[HiringSignal] = []
     product_signals: list[ProductSignal] = []
     # Analysis
-    ai_maturity_score: float = 0.0
+    ai_maturity_score: float = Field(default=0.0, ge=0.0, le=10.0) 
     ai_maturity_notes: str = ""
     executive_summary: str = ""
     # Meta
