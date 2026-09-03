@@ -97,8 +97,8 @@ def embed_and_store(
     new_ids, new_texts, new_metas = [], [], []
     for i, chunk in enumerate(chunks):
         chunk_id = hashlib.sha256(
-            f"{url}|{i}|{chunk[:60]}".encode()
-        ).hexdigest()[:32]
+            f"{url}|{i}|{chunk}".encode()
+        ).hexdigest()[:32] 
 
         try:
             existing = collection.get(ids=[chunk_id])
