@@ -13,6 +13,16 @@ __pycache__/
 node_modules/
 dist/
 .vite/
+.cache/
+
+# Frontend build artifacts
+frontend/dist/
+frontend/.vite/
+frontend/node_modules/
+
+# Lock files (optional — some teams commit these, some don't)
+# package-lock.json
+# yarn.lock
 
 # Data — too large for git
 chroma_data/
@@ -25,4 +35,4 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
-*.swp
+*.swp 
