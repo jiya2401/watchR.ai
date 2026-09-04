@@ -10,8 +10,6 @@
 
 </div>
 
----
-
 ## What You Get
  
 You type a company name. In minutes you get:
@@ -23,7 +21,6 @@ You type a company name. In minutes you get:
 - **Executive intelligence brief** — written like a VC research note
 **No human input after the company name. The autonomous agent does everything.**
  
----
  
 ## Build Progress
  
@@ -36,7 +33,6 @@ You type a company name. In minutes you get:
 | LangGraph Agent | ✅ |
 | React Dashboard | ⏳ |
  
----
  
 ## Architecture
  
@@ -75,7 +71,6 @@ flowchart TD
     StorageAPI --> Frontend
 ```
  
----
  
 ## Graph Flow
  
@@ -92,8 +87,6 @@ flowchart TD
     style G fill:#22c55e,color:#fff
     style A fill:#3b82f6,color:#fff
 ```
- 
----
  
 ## Agent Pipeline — Node by Node
  
