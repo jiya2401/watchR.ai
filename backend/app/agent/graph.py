@@ -8,6 +8,8 @@ from app.agent.nodes import (
     node_analyze_hiring,
     node_analyze_product,
     node_synthesize,
+    node_handle_no_data,
+    has_scraped_data,
 )
 from app.utils.logger import get_logger
 
@@ -17,12 +19,23 @@ log = get_logger(__name__)
 def _route_after_await(state: AgentState) -> str:
     """
     Conditional edge after await_scrape.
-    If scrape is done → proceed to analysis.
-    If not → loop back to keep waiting.
+    - Still polling            → loop back and keep waiting.
+    - Done, but ChromaDB empty → short-circuit to handle_no_data
+      instead of burning LLM calls on empty context.
+    - Done, with data          → proceed to analysis.
+
+    Checks ChromaDB directly (not articles_scraped/github_data) since
+    that's the actual gate for what analyze_tech/hiring/product can
+    retrieve — a chunk can fail to embed even after a "successful"
+    scrape.
     """
-    if state.get("scrape_done"):
-        return "analyze_tech"
-    return "await_scrape"
+    if not state.get("scrape_done"):
+        return "await_scrape"
+
+    if not has_scraped_data(state["company"]):
+        return "handle_no_data"
+ 
+    return "analyze_tech"
 
 
 def _build_graph():
@@ -31,6 +44,7 @@ def _build_graph():
     # Add all nodes
     graph.add_node("trigger_scrape",   node_trigger_scrape)
     graph.add_node("await_scrape",     node_await_scrape)
+    graph.add_node("handle_no_data",   node_handle_no_data)
     graph.add_node("analyze_tech",     node_analyze_tech)
     graph.add_node("analyze_hiring",   node_analyze_hiring)
     graph.add_node("analyze_product",  node_analyze_product)
@@ -48,9 +62,12 @@ def _build_graph():
         _route_after_await,
         {
             "await_scrape": "await_scrape",
+            "handle_no_data": "handle_no_data",
             "analyze_tech": "analyze_tech",
         },
     )
+
+    graph.add_edge("handle_no_data", END)
 
     # Analysis chain — sequential so each builds on previous
     graph.add_edge("analyze_tech",    "analyze_hiring")
@@ -59,7 +76,7 @@ def _build_graph():
     graph.add_edge("synthesize",      END)
 
     return graph.compile()
-
+ 
 
 # Compiled graph — singleton, import this
 agent_graph = _build_graph()
