@@ -10,6 +10,7 @@ import google.generativeai as genai
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 from app.config import get_settings
+from app.rag.embedder import get_collection
 from app.rag.retriever import retrieve, retrieve_multi
 from app.models.schemas import TechSignal, HiringSignal, ProductSignal, StepLog
 from app.agent.prompts import (
@@ -226,6 +227,35 @@ def node_await_scrape(state: AgentState) -> AgentState:
                  "Timeout — proceeding with available data",
                  "Some sources may be incomplete")
     return state
+
+
+
+# Node 2b: Handle Zero-Data Scrape
+# Data gate, run after await_scrape. Checks ChromaDB directly rather
+# than trusting the scrape task's own counters — that's the real
+# source of truth for whether analyze_tech/hiring/product would have
+# anything to retrieve. Short-circuits straight to END instead of
+# calling Gemini with empty context and storing an all-zeros report.
+
+def has_scraped_data(company: str) -> bool:
+    try:
+        collection = get_collection(company)
+        return collection.count() > 0
+    except Exception as e:
+        log.warning("Could not check ChromaDB collection for %s: %s", company, e)
+        return False
+
+
+def node_handle_no_data(state: AgentState) -> AgentState:
+    message = "No data collected"
+    state["error"] = message
+    state = _log(
+        state, "handle_no_data",
+        "No data collected — blog and GitHub scraping returned nothing to analyze",
+        "Check the company name / that their blog & GitHub org are reachable",
+    )
+    return state
+ 
 
 
 # Node 3: Analyze Tech Stack

@@ -128,23 +128,38 @@ export default function Report() {
   )
 
   if (error || !report) return (
+   // Agent ran but found nothing to analyze (blog + GitHub both empty) —
+  // distinct from "never analyzed": this report exists but has no signals.
+   if (report.error) return (
     <div className="min-h-screen bg-w-bg flex items-center justify-center">
-      <div className="text-center">
-        <AlertTriangle size={36} className="text-w-yellow mx-auto mb-4" />
-        <p className="font-medium text-w-text mb-1">Report not found</p>
+      <div className="text-center max-w-md px-6">
+        <AlertTriangle size={36} className="text-w-red mx-auto mb-4" />
+        <p className="font-medium text-w-text mb-1">Analysis couldn't find any data</p>
         <p className="text-w-muted text-sm mb-6">
-          {name} hasn't been analyzed yet.
+          {report.error === 'No data collected'
+            ? `We couldn't find a readable engineering blog or GitHub org for ${name}. Double-check the company name, or try again later.`
+            : report.error}
         </p>
-        <button
-          onClick={() => nav('/')}
-          className="text-w-blue text-sm hover:underline"
-        >
-          ← Analyze it now
-        </button>
+        <div className="flex items-center justify-center gap-4">
+          <button
+            onClick={() => nav('/')}
+            className="text-w-dim text-sm hover:text-w-text transition-colors"
+          >
+            ← All companies
+          </button>
+          <button
+            onClick={() => api.triggerAnalysis(name, true).then(() => refetch())}
+            className="text-w-blue text-sm hover:underline"
+          >
+            Retry analysis
+          </button>
+        </div>
       </div>
     </div>
+   )
+  
   )
-
+ 
   const tabCount = (key) => report[key]?.length ?? 0
 
   return (
